@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "How to deploy with Vercel?",
+    "content": "I was trying to deploy my Django backend and React frontend. Any advice or best practices?",
+    "author": "anikdey",
+    "time": "2 hours ago",
+    "votes": 12
+  },
+  {
+    "id": 2,
+    "title": "React vs Vue for 2025?",
+    "content": "Which one are you guys using this year? I feel React has better ecosystem, but Vue seems simpler.",
+    "author": "roadie",
+    "time": "5 hours ago",
+    "votes": 31
+  }
+]

@@ -1,42 +1,50 @@
 import { useState } from 'react';
 import api from '../api/axios';
 
-export default function Login() {
+export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await api.post('/user/token/', { username, password });
-      const token = res.data.token;
-
-      localStorage.setItem('token', token);
-      window.location.href = '/';
+      await api.post('/user/register/', { username, password, email });
+      alert('Registration successful! Please log in.');
+      window.location.href = '/login';
     } catch (err) {
       console.error(err);
       const message =
         err.response?.data?.detail ||
         err.response?.data?.message ||
-        'Login failed';
+        err.response?.data?.error ||
+        'Registration failed';
       alert(message);
-    } finally {
+    } finally{
       setLoading(false);
     }
-  };
+  }; 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Login</h2>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Register</h2>
+        <form onSubmit={handleRegister} className="space-y-4">
           <input
             type="text"
             value={username}
             onChange={e => setUsername(e.target.value)}
             placeholder="Username"
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Email"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
@@ -75,13 +83,13 @@ export default function Login() {
                 />
               </svg>
             ) : (
-              'Login'
+              'Register'
             )}
           </button>
         </form>
         <p className="text-center text-sm text-gray-600 mt-4">
-          Don&apos;t have an account?{' '}
-          <a href="/register" className="text-blue-500 hover:underline">Register</a>
+          Already have an account?{' '}
+          <a href="/login" className="text-blue-500 hover:underline">Login</a>
         </p>
       </div>
     </div>
