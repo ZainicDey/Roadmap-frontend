@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState} from 'react';
 import Navbar from '../components/navbar';
 import PostCard from '../components/postCard';
-
+import api from '../api/axios';
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,41 +9,25 @@ export default function Home() {
   const [category, setCategory] = useState('');
   const [status, setStatus] = useState('');
   const [sort, setSort] = useState('');
-  const [firstLoad, setFirstLoad] = useState(false);
 
   useEffect(() => {
-    let url = 'https://roadmap-nine-gamma.vercel.app/feature/posts/';
-    setPosts([]);
-
+    let url = '/feature/posts/';
     const params = new URLSearchParams();
     if (category) params.append('category', category);
     if (status) params.append('status', status);
     if (sort) params.append('ordering', sort);
-
     if (params.toString()) url += `?${params.toString()}`;
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data);
-        if (!firstLoad) { 
-          setLoading(false);
-        }
+    api.get(url)
+      .then((res) => {
+        console.log('Fetched posts:', res.data);
+        setPosts(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.error('Error fetching posts:', err);
-        if (!firstLoad) {
-          setLoading(false);
-        }
       });
   }, [category, status, sort]);
-
-
-
-  const activeCategory = (cat) =>
-    category === cat ? 'bg-blue-600 text-white' : 'bg-gray-200';
-  const activeStatus = (stat) =>
-    status === stat ? 'bg-green-600 text-white' : 'bg-gray-200';
 
   return (
     <>
@@ -99,11 +83,16 @@ export default function Home() {
               {posts.map((post) => (
                 <PostCard
                   key={post.id}
+                  postId={post.id}
                   title={post.title}
                   content={post.description}
                   author={post.author}
                   time={post.time}
-                  votes={post.score}
+                  initialvotes={post.score}
+                  category={post.category}
+                  status={post.status}
+                  your_reaction={post.your_reaction}
+                  comment_count={post.comment_count}
                 />
               ))}
             </>

@@ -11,7 +11,7 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await api.post('/user/token/', { username, password });
-      const token = res.data.token;
+      const token = res.data.access;
 
       localStorage.setItem('token', token);
       window.location.href = '/';

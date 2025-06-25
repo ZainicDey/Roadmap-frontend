@@ -4,7 +4,7 @@ import Register from './pages/register';
 import Home from './pages/home';
 import ProtectedRoute from './ProtectedRoute';
 import AuthRoute from './AuthRoute';
-
+import PostDetailPage from './pages/postDetail';
 function App() {
   return (
     <Router>
@@ -34,6 +34,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/posts/:postId" element={<PostDetailPage />} />
         </Routes>
       </div>
     </Router>
