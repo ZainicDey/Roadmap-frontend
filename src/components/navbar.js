@@ -64,9 +64,9 @@ export default function Navbar() {
                         <a href="/" className="py-2 px-0 text-sm text-gray-500 rounded hover:bg-gray-200 inline-block">
                             <span className="px-3">Refresh</span>
                         </a>
-                        <button onClick={logout} className="py-2 px-0 text-sm text-red-500 rounded hover:bg-gray-200 inline-block">
+                        <a onClick={logout} className="py-2 px-0 text-sm text-red-500 rounded hover:bg-gray-200 inline-block">
                             <span className="px-3">Logout</span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             )}
