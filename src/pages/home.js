@@ -40,7 +40,7 @@ export default function Home() {
             </div>
           ) : (
             <>
-              <div className="flex space-x-12 mb-6">
+              <div className="flex flex-col sm:flex-row sm:space-x-12 space-y-4 sm:space-y-0 mb-6">
                 <div>
                   <label className="font-semibold mb-2 block">Category:</label>
                   <select
@@ -69,13 +69,13 @@ export default function Home() {
                   </select>
                 </div>
 
-                <div>
-                  <div className="font-semibold mb-2">Sort by upvotes:</div>
+                <div className="w-full sm:w-auto flex flex-col items-start sm:items-center">
+                  <div className="text-sm sm:text-base font-semibold mb-2 sm:mb-1">Sort:</div>
                   <button
-                    className="px-3 py-1 bg-purple-500 text-white rounded"
+                    className="inline-flex items-center px-3 py-1 text-sm sm:text-base bg-purple-500 text-white rounded hover:bg-purple-600 transition"
                     onClick={() => setSort(sort === 'score' ? '' : 'score')}
                   >
-                    {sort === 'score' ? 'Sorted by Score ⬇️' : 'Sort by Score'}
+                    {sort === 'score' ? 'Score ⬇️' : 'By Score'}
                   </button>
                 </div>
               </div>

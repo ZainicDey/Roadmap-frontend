@@ -19,7 +19,6 @@ export default function Navbar() {
         <nav className="bg-gray-100">
             <div className="max-w-6xl mx-auto px-4">
                 <div className="flex justify-between items-center">
-                    {/* Logo */}
                     <div className="flex space-x-4">
                         <a href="/" className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
                             <MapPinIcon className="h-6 w-6 mr-2 text-blue-500" />
@@ -49,7 +48,6 @@ export default function Navbar() {
                         )}
                     </div>
 
-                    {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center">
                         <button onClick={toggleMobileMenu} className="mobile-menu-button">
                             <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
