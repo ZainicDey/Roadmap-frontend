@@ -9,13 +9,14 @@ export default function PostDetail() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [newComment, setNewComment] = useState('');
+  // const [comments, setComments] = useState(post.comments || []);
   const navigate = useNavigate();
   useEffect(() => {
     if (!postId) return;
     api.get(`/feature/posts/${postId}/`)
       .then(res => setPost(res.data))
       .catch(err => console.error('Error loading post detail:', err));
-  }, [postId, CommentItem]);
+  }, [postId]);
 
   const handleAddComment = () => {
     console.log('Adding comment:', newComment);
@@ -29,19 +30,29 @@ export default function PostDetail() {
         setNewComment('');
       });
   };
-
-  const handleDelete = (commentId) => {
-    api.delete(`/feature/comments/${commentId}/`)
-      .then(() => {
-        setPost(prev => ({
-          ...prev,
-          comments: prev.comments.filter(c => c.id !== commentId),
-        }));
-      });
-  };
+function removeCommentById(comments, commentId) {
+  return comments
+    .filter(comment => comment.id !== commentId) 
+    .map(comment => ({
+      ...comment,
+      replies: comment.replies ? removeCommentById(comment.replies, commentId) : [],
+    }));
+}
+const handleDelete = (commentId) => {
+  api.delete(`/feature/comments/${commentId}/`)
+    .then(() => {
+      setPost(prev => ({
+        ...prev,
+        comments: removeCommentById(prev.comments, commentId)
+      }));
+    })
+    .catch(err => {
+      console.error('Delete failed', err);
+    });
+};
 
   const handleEdit = (commentId, newContent) => {
-    api.put(`/feature/comments/${commentId}/`, { content: newContent })
+    api.patch(`/feature/comments/${commentId}/`, { content: newContent })
       .then(res => {
         setPost(prev => ({
           ...prev,
@@ -54,7 +65,7 @@ export default function PostDetail() {
   <>
     <Navbar/>
     <div className="bg-white p-6 shadow rounded">
-      <button className="mb-4 text-sm text-blue-600" onClick={() => navigate(-1)}>← Back</button>
+      <button className="mb-4 text-sm text-blue-600" onClick={() => navigate('/')}>← Back</button>
 
       {post ? (
         <>
@@ -68,6 +79,7 @@ export default function PostDetail() {
             category={post.category}
             status={post.status}
             your_reaction={post.your_reaction}
+            comment_count={post.comment_count}
           />
 
           {/* Comments Section */}
@@ -78,6 +90,9 @@ export default function PostDetail() {
                 comment={comment}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                parent={comment.parent}
+                postId={postId}
+                // setComments={setComments}
               />
             ))}
           </div>
