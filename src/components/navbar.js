@@ -62,11 +62,11 @@ export default function Navbar() {
                 <div className="mobile-menu md:hidden px-4 pb-4">
                     <div className="flex flex-col space-y-1">
                         <a href="/" className="py-2 px-0 text-sm text-gray-500 rounded hover:bg-gray-200 inline-block">
-                        <span className="px-3">Refresh</span>
+                            <span className="px-3">Refresh</span>
                         </a>
-                        <a href="/logout" className="py-2 px-0 text-sm text-red-500 rounded hover:bg-gray-200 inline-block">
-                        <span className="px-3">Logout</span>
-                        </a>
+                        <button onClick={logout} className="py-2 px-0 text-sm text-red-500 rounded hover:bg-gray-200 inline-block">
+                            <span className="px-3">Logout</span>
+                        </button>
                     </div>
                 </div>
             )}
