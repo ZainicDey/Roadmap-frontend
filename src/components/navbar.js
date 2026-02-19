@@ -61,18 +61,24 @@ export default function Navbar() {
             {isMobileMenuOpen && (
                 <div className="mobile-menu md:hidden px-4 pb-4">
                     <div className="flex flex-col space-y-1">
-                        <a
+                    <button
+                        type="button"
                         onClick={() => window.location.reload()}
-                            className="py-2 px-0 text-sm text-gray-500 rounded hover:bg-gray-200 inline-block cursor-pointer"
-                            >
-                            <span className="px-3">Refresh</span>
-                        </a>
-                        <a onClick={logout} className="py-2 px-0 text-sm text-red-500 rounded hover:bg-gray-200 inline-block">
-                            <span className="px-3">Logout</span>
-                        </a>
+                        className="py-2 px-0 text-sm text-gray-500 rounded hover:bg-gray-200 inline-block text-left w-full"
+                    >
+                        <span className="px-3">Refresh</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={logout}
+                        className="py-2 px-0 text-sm text-red-500 rounded hover:bg-gray-200 inline-block text-left w-full"
+                    >
+                        <span className="px-3">Logout</span>
+                    </button>
                     </div>
                 </div>
-            )}
+                )}
         </nav>
     );
 }
